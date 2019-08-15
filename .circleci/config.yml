@@ -8,9 +8,15 @@ workflows:
       - dockerize:
           requires:
             - test
-      - deploy:
+      - deploy-staging:
           requires:
             - dockerize
+      - smoke-test:
+          requires:
+            - deploy-staging
+      - deploy:
+          requires:
+            - smoke-test
 
 jobs:
   test:
