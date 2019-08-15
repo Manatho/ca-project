@@ -90,6 +90,8 @@ jobs:
     docker:
       - image: rufus/siege-engine
         command: http://34.77.143.146
+    steps:
+      -run: 'echo hej'
   deploy:
     docker:
       - image: circleci/python:3.7
