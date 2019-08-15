@@ -4,13 +4,13 @@ workflows:
   version: 2
   test_dockerize_deploy:
     jobs:
-     # - test
-     # - dockerize:
-     #     requires:
-     #       - test
-      - deploy
-     #     requires:
-     #       - dockerize
+      - test
+      - dockerize:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - dockerize
 
 
 jobs:
