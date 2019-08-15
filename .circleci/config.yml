@@ -38,7 +38,7 @@ jobs:
       - image: ubuntu:18.04
     steps:
       - add_ssh_keys:
-        - "bc:b2:8d:c5:3c:61:9e:44:93:37:a3:2b:cf:36:09:a2"
+          - "bc:b2:8d:c5:3c:61:9e:44:93:37:a3:2b:cf:36:09:a2"
       - run:
           name: "Deploy over SSH"
           command: |
