@@ -37,7 +37,8 @@ jobs:
             - .
   linter:
     docker:
-      - image: cytopia/docker-pylint
+      - image: cytopia/pylint
+        entrypoint: sh
     steps:
       - attach_workspace:
           at: .
