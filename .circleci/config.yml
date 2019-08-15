@@ -28,8 +28,7 @@ workflows:
 jobs:
   checkout:
     docker:
-      - image: https://github.com/cytopia/docker-pylint
-      - entrypoint: sh
+      - image: python:3.6-alpine
     steps:
       - checkout
       - persist_to_workspace:
@@ -38,7 +37,8 @@ jobs:
             - .
   linter:
     docker:
-      - image: python:3.6-alpine
+      - image: cytopia/docker-pylint
+      - entrypoint: sh
     steps:
       - attach_workspace:
           at: .
@@ -54,16 +54,9 @@ jobs:
           command: pip install -r requirements.txt
       - run:
           name: Test CoDeChan
-          command: coverage run -m tests.py
-      - run:
-          name: Coverage report CoDeChan
-          command: |
-            coverage report
-            coverage html
+          command: python tests.py
       - store_test_results:
           path: test-reports
-      - store_artifacts:
-          path: htmlcoverage
 
   dockerize:
     machine: true
