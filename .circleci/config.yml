@@ -42,7 +42,7 @@ jobs:
       - checkout
       - run:
           name: "Deploy to staging server"
-          command: bash ./deploy.sh 34.77.143.14 $CIRCLE_SHA1
+          command: bash ./deploy.sh 34.77.143.146 $CIRCLE_SHA1
   smoke-test:
     docker:
       - image: circleci/python:3.7
@@ -53,7 +53,7 @@ jobs:
       - checkout
       - run:
           name: "Run smoke test on staging"
-          command: bash ./smoke-test.sh 34.77.143.14
+          command: bash ./smoke-test.sh 34.77.143.146
   deploy:
     docker:
       - image: circleci/python:3.7
