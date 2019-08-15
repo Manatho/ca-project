@@ -37,7 +37,7 @@ jobs:
             - .
   linter:
     docker:
-      - image: python:3.6-alpine
+      - image: cytopia/docker-pylint
     steps:
       - attach_workspace:
           at: .
@@ -61,8 +61,6 @@ jobs:
             coverage html
       - store_test_results:
           path: test-reports
-      - store_artifacts:
-          path: htmlcoverage
 
   dockerize:
     machine: true
