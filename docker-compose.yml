@@ -2,6 +2,7 @@ version: '3'
 services: 
   codechan:
     image: mahov15/codechan:latest
+    pull: true
     ports:
       - 80:5000
   
