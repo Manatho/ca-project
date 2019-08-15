@@ -14,6 +14,7 @@ workflows:
       - dockerize:
           requires:
             - test
+            - linter
       - deploy-staging:
           requires:
             - dockerize
@@ -27,7 +28,7 @@ workflows:
 jobs:
   checkout:
     docker:
-      - image: cytopia/pylint
+      - image: python:3.6-alpine
     steps:
       - checkout
       - persist_to_workspace:
