@@ -43,4 +43,4 @@ jobs:
       - checkout
       - run:
           name: "Deploy production"
-          command: "./deploy.sh 35.233.86.108 $CIRCLE_SHA1"
+          command: bash ./deploy.sh 35.233.86.108 $CIRCLE_SHA1
