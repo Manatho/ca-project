@@ -5,9 +5,6 @@ workflows:
   test_dockerize_deploy:
     jobs:
       - checkout
-      - linter:
-          requires:
-            - checkout
       - test:
           requires:
             - checkout
@@ -35,14 +32,6 @@ jobs:
           root: .
           paths:
             - .
-  linter:
-    docker:
-      - image: cytopia/pylint
-        entrypoint: sh
-    steps:
-      - attach_workspace:
-          at: .
-      - run: pylint app
   test:
     docker:
       - image: python:3.6-alpine
