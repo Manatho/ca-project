@@ -46,6 +46,8 @@ jobs:
   dockerize:
     machine: true
     steps:
+      - attach_workspace:
+          at: .
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker build -t $DOCKER_USER/codechan:$CIRCLE_SHA1 -t $DOCKER_USER/codechan:latest .
       - run: docker push $DOCKER_USER/codechan:$CIRCLE_SHA1
