@@ -12,7 +12,6 @@ workflows:
           requires:
             - dockerize
 
-
 jobs:
   test:
     docker:
@@ -33,14 +32,36 @@ jobs:
       - run: docker build -t $DOCKER_USER/codechan:$CIRCLE_SHA1 -t $DOCKER_USER/codechan:latest .
       - run: docker push $DOCKER_USER/codechan:$CIRCLE_SHA1
       - run: docker push $DOCKER_USER/codechan:latest
+  deploy-staging:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "bc:b2:8d:c5:3c:61:9e:44:93:37:a3:2b:cf:36:09:a2"
+      - checkout
+      - run:
+          name: "Deploy to staging server"
+          command: bash ./deploy.sh 34.77.143.14 $CIRCLE_SHA1
+  smoke-test:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "bc:b2:8d:c5:3c:61:9e:44:93:37:a3:2b:cf:36:09:a2"
+      - checkout
+      - run:
+          name: "Run smoke test on staging"
+          command: bash ./smoke-test.sh 34.77.143.14
   deploy:
     docker:
       - image: circleci/python:3.7
     steps:
       - add_ssh_keys:
-          fingerprints: 
+          fingerprints:
             - "bc:b2:8d:c5:3c:61:9e:44:93:37:a3:2b:cf:36:09:a2"
       - checkout
       - run:
-          name: "Deploy production"
+          name: "Deploy to production server"
           command: bash ./deploy.sh 35.233.86.108 $CIRCLE_SHA1
