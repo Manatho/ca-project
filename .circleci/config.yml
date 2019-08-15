@@ -44,5 +44,5 @@ jobs:
       - run:
           name: "Deploy over SSH"
           command: |
-            rsync -va --delete ./docker-compose.yml ubuntu@35.233.86.108:/opt/codechan/docker-compose.yml
+            scp ./docker-compose.yml ubuntu@35.233.86.108:/opt/codechan/docker-compose.yml
             ssh -oStrictHostKeyChecking=no ubuntu@35.233.86.108 cat ./opt/codechan/docker-compose.yml
