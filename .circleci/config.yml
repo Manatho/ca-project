@@ -91,7 +91,7 @@ jobs:
       - image: rufus/siege-engine
         entrypoint: bash
     steps:
-      - run: bash /usr/local/bin/siege http://34.77.143.146
+      - run: /usr/local/bin/siege http://34.77.143.146
   deploy:
     docker:
       - image: circleci/python:3.7
