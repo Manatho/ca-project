@@ -42,10 +42,5 @@ jobs:
             - "bc:b2:8d:c5:3c:61:9e:44:93:37:a3:2b:cf:36:09:a2"
       - checkout
       - run:
-          name: "Copy over docker-compose"
-          command: |
-            scp -o StrictHostKeyChecking=no ./docker-compose.yml ubuntu@35.233.86.108:/tmp/
-      - run:
-          name: "SSH and deploy"
-          command: |
-            ssh -o StrictHostKeyChecking=no -t ubuntu@35.233.86.108 "cd /tmp/ ; docker-compose pull && docker-compose up -d"
+          name: "Deploy production"
+          command: "./deploy.sh 35.233.86.108 $CIRCLE_SHA1"
