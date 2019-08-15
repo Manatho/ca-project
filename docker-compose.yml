@@ -1,7 +1,7 @@
 version: '3'
 services: 
   codechan:
-    image: mahov15/codechan
+    image: mahov15/codechan:latest
     ports:
       - 80:5000
   
