@@ -30,6 +30,8 @@ jobs:
       - run:
           name: Test CoDeChan
           command: python tests.py
+      - store_test_results:
+          path: test-reports
       - persist_to_workspace:
           root: .
           paths:
