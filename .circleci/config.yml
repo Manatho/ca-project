@@ -89,9 +89,9 @@ jobs:
   stress-test:
     docker:
       - image: rufus/siege-engine
-        command: http://34.77.143.146
+        entrypoint: bash
     steps:
-      - run: 'echo hej'
+      - run: bash /usr/local/bin/siege http://34.77.143.146
   deploy:
     docker:
       - image: circleci/python:3.7
