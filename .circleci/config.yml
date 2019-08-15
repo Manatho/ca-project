@@ -4,13 +4,13 @@ workflows:
   version: 2
   test_dockerize_deploy:
     jobs:
-      - test
-      - dockerize:
-          requires:
-            - test
-      - deploy:
-          requires:
-            - dockerize
+     # - test
+     # - dockerize:
+     #     requires:
+     #       - test
+      - deploy
+     #     requires:
+     #       - dockerize
 
 
 jobs:
@@ -43,4 +43,4 @@ jobs:
       - run:
           name: "Deploy over SSH"
           command: |
-            ssh ubuntu@35.233.86.108 ls 
+            ssh -oStrictHostKeyChecking=no ubuntu@35.233.86.108 ls 
