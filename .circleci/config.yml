@@ -40,7 +40,9 @@ jobs:
       - add_ssh_keys:
           fingerprints: 
             - "bc:b2:8d:c5:3c:61:9e:44:93:37:a3:2b:cf:36:09:a2"
+      - checkout
       - run:
           name: "Deploy over SSH"
           command: |
-            ssh -oStrictHostKeyChecking=no ubuntu@35.233.86.108 ls 
+            rsync -va --delete ./docker-compose.yml ubuntu@35.233.86.108:/opt/codechan/docker-compose.yml
+            ssh -oStrictHostKeyChecking=no ubuntu@35.233.86.108 cat ./opt/codechan/docker-compose.yml
