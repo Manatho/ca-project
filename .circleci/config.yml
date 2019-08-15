@@ -4,10 +4,17 @@ workflows:
   version: 2
   test_dockerize_deploy:
     jobs:
-      - test
+      - checkout
+      - linter:
+          requires:
+            - checkout
+      - test:
+          requires:
+            - checkout
       - dockerize:
           requires:
             - test
+            - linter
       - deploy-staging:
           requires:
             - dockerize
@@ -19,11 +26,28 @@ workflows:
             - smoke-test
 
 jobs:
-  test:
+  checkout:
     docker:
       - image: python:3.6-alpine
     steps:
       - checkout
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  linter:
+    docker:
+      - image: python:3.6-alpine
+    steps:
+      - attach_workspace:
+          at: .
+      - run: pylint app
+  test:
+    docker:
+      - image: python:3.6-alpine
+    steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Install dependencies
           command: pip install -r requirements.txt
@@ -32,15 +56,10 @@ jobs:
           command: python tests.py
       - store_test_results:
           path: test-reports
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
+
   dockerize:
     machine: true
     steps:
-      - attach_workspace:
-          at: .
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker build -t $DOCKER_USER/codechan:$CIRCLE_SHA1 -t $DOCKER_USER/codechan:latest .
       - run: docker push $DOCKER_USER/codechan:$CIRCLE_SHA1
