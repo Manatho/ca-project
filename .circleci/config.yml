@@ -28,7 +28,8 @@ workflows:
 jobs:
   checkout:
     docker:
-      - image: python:3.6-alpine
+      - image: https://github.com/cytopia/docker-pylint
+      - entrypoint: sh
     steps:
       - checkout
       - persist_to_workspace:
