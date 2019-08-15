@@ -4,6 +4,7 @@ workflows:
   version: 2
   test_dockerize_deploy:
     jobs:
+      - linter
       - test
       - dockerize:
           requires:
