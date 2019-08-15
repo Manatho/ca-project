@@ -1,13 +1,9 @@
-version: 2.1
-
-orbs:
-  pylint: qventus/python-lint@volatile
+version: 2.0
 
 workflows:
   version: 2
   test_dockerize_deploy:
     jobs:
-      - pylint/lint
       - test
       - dockerize:
           requires:
@@ -23,11 +19,22 @@ workflows:
             - smoke-test
 
 jobs:
+  linter:
+    docker:
+      - image: cytopia/pylint
+    steps:
+      - checkout
+      - run: pylint ./
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
   test:
     docker:
       - image: python:3.6-alpine
     steps:
-      - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Install dependencies
           command: pip install -r requirements.txt
