@@ -2,9 +2,16 @@ version: 2.0
 
 workflows:
   version: 2
-  test:
+  test_dockerize_deploy:
     jobs:
       - test
+      - dockerize:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - dockerize
+
 
 jobs:
   test:
@@ -18,3 +25,21 @@ jobs:
       - run:
           name: Test CoDeChan
           command: python tests.py
+  dockerize:
+    machine: true
+    steps:
+      - checkout
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run: docker build -t $DOCKER_USER/codechan:$CIRCLE_SHA1 -t $DOCKER_USER/codechan:latest .
+      - run: docker push $DOCKER_USER/myapp:$CIRCLE_SHA1
+      - run: docker push $DOCKER_USER/myapp:latest
+  deploy:
+    docker:
+      - image: ubuntu:18.04
+    steps:
+      - add_ssh_keys:
+        - "bc:b2:8d:c5:3c:61:9e:44:93:37:a3:2b:cf:36:09:a2"
+      - run:
+          name: "Deploy over SSH"
+          command: |
+            ssh ubuntu@35.233.86.108 ls 
