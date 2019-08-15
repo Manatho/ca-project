@@ -37,7 +37,7 @@ jobs:
             - .
   linter:
     docker:
-      - image: cytopia/pylint
+      - image: python:3.6-alpine
     steps:
       - attach_workspace:
           at: .
