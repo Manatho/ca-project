@@ -35,7 +35,7 @@ jobs:
       - run: docker push $DOCKER_USER/codechan:latest
   deploy:
     docker:
-      - image: ubuntu:18.04
+      - image: circleci/python:3.7
     steps:
       - add_ssh_keys:
           fingerprints: 
