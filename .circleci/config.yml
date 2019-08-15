@@ -54,9 +54,16 @@ jobs:
           command: pip install -r requirements.txt
       - run:
           name: Test CoDeChan
-          command: python tests.py
+          command: coverage run -m tests.py
+      - run:
+          name: Coverage report CoDeChan
+          command: |
+            coverage report
+            coverage html
       - store_test_results:
           path: test-reports
+      - store_artifacts:
+          path: htmlcoverage
 
   dockerize:
     machine: true
