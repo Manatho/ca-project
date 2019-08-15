@@ -31,8 +31,8 @@ jobs:
       - checkout
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker build -t $DOCKER_USER/codechan:$CIRCLE_SHA1 -t $DOCKER_USER/codechan:latest .
-      - run: docker push $DOCKER_USER/myapp:$CIRCLE_SHA1
-      - run: docker push $DOCKER_USER/myapp:latest
+      - run: docker push $DOCKER_USER/codechan:$CIRCLE_SHA1
+      - run: docker push $DOCKER_USER/codechan:latest
   deploy:
     docker:
       - image: ubuntu:18.04
