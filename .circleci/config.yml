@@ -43,6 +43,13 @@ jobs:
       - run: docker build -t $DOCKER_USER/codechan:$CIRCLE_SHA1 -t $DOCKER_USER/codechan:latest .
       - run: docker push $DOCKER_USER/codechan:$CIRCLE_SHA1
       - run: docker push $DOCKER_USER/codechan:latest
+      - run: mkdir artifacts
+      - run: zip -r artifacts/CoDeChan.zip .
+      - run: docker image save $DOCKER_USER/codechan:$CIRCLE_SHA1 -o artifacts/codechan:$CIRCLE_SHA1.tar
+      - store_artifacts:
+          path: artifacts
+          destination: prefix
+
   deploy-staging:
     docker:
       - image: circleci/python:3.7
