@@ -45,4 +45,4 @@ jobs:
           name: "Deploy over SSH"
           command: |
             scp -o StrictHostKeyChecking=no ./docker-compose.yml ubuntu@35.233.86.108:/tmp/
-            ssh -o StrictHostKeyChecking=no ubuntu@35.233.86.108 cat /tmp/docker-compose.yml
+            ssh -o StrictHostKeyChecking=no -t ubuntu@35.233.86.108 "cd /tmp/ ; docker-compose up -d"
