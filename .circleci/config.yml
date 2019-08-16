@@ -20,6 +20,7 @@ workflows:
       - deploy:
           requires:
             - smoke-test
+            - stress-test
 
 jobs:
   test:
